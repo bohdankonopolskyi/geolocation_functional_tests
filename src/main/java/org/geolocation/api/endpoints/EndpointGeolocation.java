@@ -1,7 +1,7 @@
 package org.geolocation.api.endpoints;
 
 public enum EndpointGeolocation implements Endpoint {
-    GEOLOCATION_JSON("/json");
+    GEOLOCATION_JSON("/json/{query}");
 
     private final String val;
 
