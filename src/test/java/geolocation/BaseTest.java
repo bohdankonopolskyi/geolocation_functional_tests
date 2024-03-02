@@ -4,11 +4,9 @@ import io.restassured.http.ContentType;
 import org.geolocation.api.Request;
 import org.geolocation.api.RequestModel;
 import org.geolocation.api.RequestWithPathParam;
-import org.testng.annotations.Listeners;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-@Listeners()
 public class BaseTest {
 
     protected void contractTest(Request request,

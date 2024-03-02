@@ -1,6 +1,6 @@
 package org.geolocation.helpers;
 
-import static org.geolocation.helpers.BooleanHelper.isNotNullAndNotBlank;
+import static org.geolocation.helpers.NullObjectHelper.isNotNullAndNotBlank;
 
 public class EnvVariableHelper {
 

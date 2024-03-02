@@ -1,6 +1,6 @@
 package org.geolocation.helpers;
 
-public class BooleanHelper {
+public class NullObjectHelper {
 
     public static boolean isNotNullAndNotBlank(Object obj) {
         return obj != null && !obj.toString().isBlank();

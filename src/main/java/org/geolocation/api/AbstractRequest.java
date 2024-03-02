@@ -9,6 +9,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.geolocation.api.endpoints.Endpoint;
 import org.geolocation.config.ConfigContainer;
+import org.geolocation.listeners.RequestFilter;
 
 public abstract class AbstractRequest implements Request {
 
@@ -28,6 +29,7 @@ public abstract class AbstractRequest implements Request {
 
         this(endpoint, baseUrl,
                 new RequestSpecBuilder()
+                        .addFilter(new RequestFilter())
                         .setAuth(new NoAuthScheme())
                         .setContentType(ContentType.JSON)
                         .setAccept(ContentType.JSON)
