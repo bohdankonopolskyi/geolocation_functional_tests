@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.geolocation.api.endpoints.Endpoint;
+import org.geolocation.config.ConfigContainer;
 
 public abstract class AbstractRequest implements Request {
 
@@ -31,6 +32,10 @@ public abstract class AbstractRequest implements Request {
                         .setContentType(ContentType.JSON)
                         .setAccept(ContentType.JSON)
                         .build());
+    }
+
+    public AbstractRequest(Endpoint endpoint) {
+        this(endpoint, ConfigContainer.getConfig().getIpApiUrl());
     }
 
     @Step(value = "Send request")
