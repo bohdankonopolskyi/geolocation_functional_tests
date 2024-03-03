@@ -9,6 +9,7 @@ import org.geolocation.api.geolocation.get.GetIpGeolocationResponseModel;
 import org.geolocation.data.collectors.QueryDataCollector;
 import org.geolocation.enums.Country;
 import org.geolocation.helpers.AssertionHelper;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,6 +19,7 @@ public class GetIpGeolocationTests extends BaseTest {
 
     @Test(groups = {ALL, GEOLOCATION, CONTRACT, POSITIVE})
     public void getIpGeolocationContractTest() {
+        Assert.assertTrue(QueryDataCollector.getInstance().getQueryList().size() != 0, "query empty list");
         contractTest(new GetIpGeolocationRequest(), QueryDataCollector.getInstance().getQueryList().get(0), null,
                 HttpStatus.SC_OK, ContentType.JSON,
                 "json.schemas/PositiveGetIpGeolocation.json");
@@ -25,6 +27,7 @@ public class GetIpGeolocationTests extends BaseTest {
 
     @Test(groups = {ALL, GEOLOCATION, CONTRACT, NEGATIVE})
     public void getIpGeolocationFailTest() {
+        Assert.assertTrue(QueryDataCollector.getInstance().getInvalidQueryList().size() != 0, "invalidQuery empty list");
         contractTest(new GetIpGeolocationRequest(), QueryDataCollector.getInstance().getInvalidQueryList().get(0), null,
                 HttpStatus.SC_OK, ContentType.JSON,
                 "json.schemas/FailGetIpGeolocation.json");
