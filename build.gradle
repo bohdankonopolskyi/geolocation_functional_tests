@@ -9,15 +9,42 @@ repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.24.0"
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'io.rest-assured:rest-assured:5.4.0'
-    testImplementation 'org.testng:testng:7.9.0'
-    implementation 'org.apache.logging.log4j:log4j-core:2.23.0'
-    implementation 'io.rest-assured:json-schema-validator:5.4.0'
+    implementation group: 'org.testng', name: 'testng', version: '7.3.0'
+    implementation group: 'io.rest-assured', name: 'rest-assured', version: '4.3.3'
+    implementation group: 'io.rest-assured', name: 'json-schema-validator', version: '4.3.3'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation group: 'io.qameta.allure', name: 'allure-testng', version: '2.13.8'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
+
+    testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
+    testImplementation "io.qameta.allure:allure-testng"
 }
 
 test {
-    useJUnitPlatform()
+    def ig = getEnvVariableOrDefault("ENV_INCLUDE_GROUPS", "ALL")
+    def eg = getEnvVariableOrDefault("ENV_EXCLUDE_GROUPS", "")
+    def tc = getEnvVariableOrDefault("ENV_TREAD_COUNT", "3")
+    def p = getEnvVariableOrDefault("ENV_PARALLEL", "methods")
+
+    useTestNG() {
+        parallel p
+        threadCount tc.toInteger()
+        includeGroups ig
+        excludeGroups eg
+    }
+}
+
+private static String getEnvVariableOrDefault(String key, String defaultVal) {
+    if (System.getProperty(key) != null && System.getProperty(key).length() > 0)
+        return System.getProperty(key)
+    else if (System.getenv(key) != null && System.getenv(key).length() > 0)
+        return System.getenv(key)
+    else
+        return defaultVal
 }
